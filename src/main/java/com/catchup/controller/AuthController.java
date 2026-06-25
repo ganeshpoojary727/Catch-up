@@ -4,6 +4,7 @@ import com.catchup.dto.RegisterRequest;
 import com.catchup.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -13,7 +14,7 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest request) {
+    public String register(@Valid @RequestBody RegisterRequest request) {
 
         userService.register(request);
 
