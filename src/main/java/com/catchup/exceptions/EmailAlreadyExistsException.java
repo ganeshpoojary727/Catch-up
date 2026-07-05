@@ -1,0 +1,9 @@
+package com.catchup.exceptions;
+
+public class EmailAlreadyExistsException extends RuntimeException {
+
+    public EmailAlreadyExistsException(String message) {
+        super(message);
+    }
+
+}
