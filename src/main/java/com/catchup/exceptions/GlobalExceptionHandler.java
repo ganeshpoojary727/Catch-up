@@ -17,5 +17,23 @@ public class GlobalExceptionHandler {
                 HttpStatus.CONFLICT
         );
     }
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFound(
+            UserNotFoundException ex) {
 
+        return new ResponseEntity<>(
+                ex.getMessage(),
+                HttpStatus.NOT_FOUND
+        );
+    }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<String> handleInvalidPassword(
+            InvalidPasswordException ex) {
+
+        return new ResponseEntity<>(
+                ex.getMessage(),
+                HttpStatus.UNAUTHORIZED
+        );
+    }
 }
