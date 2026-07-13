@@ -5,5 +5,5 @@ import com.catchup.dto.LoginRequest;
 public interface UserService {
 
     void register(RegisterRequest request);
-    void login(LoginRequest request);
+    String login(LoginRequest request);
 }

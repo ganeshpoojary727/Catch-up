@@ -22,10 +22,7 @@ public class AuthController {
         return "User Registered Successfully";
     }
     @PostMapping("/login")
-    public String login(@Valid @RequestBody LoginRequest request) {
-
-        userService.login(request);
-
-        return "Login Successful";
+    public String login(@RequestBody LoginRequest request) {
+        return userService.login(request);
     }
 }
