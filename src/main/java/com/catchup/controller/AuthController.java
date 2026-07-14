@@ -25,4 +25,8 @@ public class AuthController {
     public String login(@RequestBody LoginRequest request) {
         return userService.login(request);
     }
+    @GetMapping("/profile")
+    public String profile() {
+        return "Welcome User";
+    }
 }
