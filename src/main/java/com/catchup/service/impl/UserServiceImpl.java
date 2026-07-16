@@ -1,6 +1,7 @@
 package com.catchup.service.impl;
 
 import com.catchup.dto.RegisterRequest;
+import com.catchup.dto.UpdateProfileRequest;
 import com.catchup.entity.User;
 import com.catchup.exceptions.InvalidPasswordException;
 import com.catchup.exceptions.UserNotFoundException;
@@ -70,5 +71,22 @@ public class UserServiceImpl implements UserService {
         response.setProfilePicture(user.getProfilePicture());
 
         return response;
+    }
+    @Override
+    public void updateProfile(UpdateProfileRequest request) {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        user.setUsername(request.getUsername());
+        user.setBio(request.getBio());
+        user.setProfilePicture(request.getProfilePicture());
+
+        userRepository.save(user);
     }
 }

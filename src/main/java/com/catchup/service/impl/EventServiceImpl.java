@@ -1,9 +1,14 @@
 package com.catchup.service.impl;
 import com.catchup.dto.CreateEventRequest;
 import com.catchup.entity.Event;
+import com.catchup.entity.User;
+import com.catchup.exceptions.UserNotFoundException;
 import com.catchup.repository.EventRepository;
+import com.catchup.repository.UserRepository;
 import com.catchup.service.EventService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,7 +18,7 @@ import java.util.List;
 public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
-
+    private final UserRepository userRepository;
     @Override
     public void createEvent(CreateEventRequest request) {
 
@@ -27,7 +32,15 @@ public class EventServiceImpl implements EventService {
         event.setImageUrl(request.getImageUrl());
 
         event.setCreatedAt(LocalDateTime.now());
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
 
+        String email = authentication.getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        event.setCreatedBy(user);
         eventRepository.save(event);
     }
     @Override
@@ -72,5 +85,17 @@ public class EventServiceImpl implements EventService {
     public List<Event> getEventsByCategory(String category) {
         return eventRepository.findByCategoryIgnoreCase(category);
     }
+    @Override
+    public List<Event> getMyEvents() {
 
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        return eventRepository.findByCreatedBy(user);
+    }
 }

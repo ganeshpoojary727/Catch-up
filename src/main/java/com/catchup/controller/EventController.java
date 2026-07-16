@@ -59,4 +59,8 @@ public class EventController {
 
         return eventService.getEventsByCategory(category);
     }
+    @GetMapping("/my-events")
+    public List<Event> getMyEvents() {
+        return eventService.getMyEvents();
+    }
 }

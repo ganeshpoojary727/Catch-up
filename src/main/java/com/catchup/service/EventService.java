@@ -20,4 +20,6 @@ public interface EventService {
     List<Event> searchEvents(String keyword);
 
     List<Event> getEventsByCategory(String category);
+
+    List<Event> getMyEvents();
 }
