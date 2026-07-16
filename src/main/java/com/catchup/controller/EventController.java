@@ -5,6 +5,8 @@ import com.catchup.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import com.catchup.entity.Event;
+import java.util.List;
 @RestController
 @RequestMapping("/api/events")
 @RequiredArgsConstructor
@@ -18,5 +20,43 @@ public class EventController {
         eventService.createEvent(request);
 
         return "Event Created Successfully";
+    }
+    @GetMapping
+    public List<Event> getAllEvents() {
+
+        return eventService.getAllEvents();
+
+    }
+    @GetMapping("/{id}")
+    public Event getEventById(@PathVariable Long id) {
+
+        return eventService.getEventById(id);
+
+    }
+    @PutMapping("/{id}")
+    public String updateEvent(
+            @PathVariable Long id,
+            @RequestBody CreateEventRequest request) {
+
+        eventService.updateEvent(id, request);
+
+        return "Event Updated Successfully";
+    }
+    @DeleteMapping("/{id}")
+    public String deleteEvent(@PathVariable Long id) {
+
+        eventService.deleteEvent(id);
+
+        return "Event Deleted Successfully";
+    }
+    @GetMapping("/search")
+    public List<Event> searchEvents(@RequestParam String keyword) {
+        return eventService.searchEvents(keyword);
+    }
+    @GetMapping("/category")
+    public List<Event> getEventsByCategory(
+            @RequestParam String category) {
+
+        return eventService.getEventsByCategory(category);
     }
 }

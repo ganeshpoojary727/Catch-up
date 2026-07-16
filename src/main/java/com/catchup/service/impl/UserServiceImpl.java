@@ -12,6 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.catchup.exceptions.EmailAlreadyExistsException;
 import com.catchup.dto.LoginRequest;
+
+import com.catchup.dto.UserProfileResponse;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -45,5 +49,26 @@ public class UserServiceImpl implements UserService {
         }
 
         return jwtService.generateToken(user.getEmail());
+    }
+    @Override
+    public UserProfileResponse getMyProfile() {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        UserProfileResponse response = new UserProfileResponse();
+
+        response.setId(user.getId());
+        response.setUsername(user.getUsername());
+        response.setEmail(user.getEmail());
+        response.setBio(user.getBio());
+        response.setProfilePicture(user.getProfilePicture());
+
+        return response;
     }
 }
