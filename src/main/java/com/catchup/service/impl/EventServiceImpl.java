@@ -102,4 +102,6 @@ public class EventServiceImpl implements EventService {
 
         return eventRepository.findByCreatedBy(user);
     }
+    
+
 }

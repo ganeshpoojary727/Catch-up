@@ -53,14 +53,16 @@ public class EventController {
     public List<Event> searchEvents(@RequestParam String keyword) {
         return eventService.searchEvents(keyword);
     }
-    @GetMapping("/category")
+    @GetMapping("/category/{category}")
     public List<Event> getEventsByCategory(
-            @RequestParam String category) {
+            @PathVariable String category) {
 
         return eventService.getEventsByCategory(category);
+
     }
     @GetMapping("/my-events")
     public List<Event> getMyEvents() {
         return eventService.getMyEvents();
     }
+
 }

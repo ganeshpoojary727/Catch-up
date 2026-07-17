@@ -22,4 +22,6 @@ public interface EventService {
     List<Event> getEventsByCategory(String category);
 
     List<Event> getMyEvents();
+
+    
 }
