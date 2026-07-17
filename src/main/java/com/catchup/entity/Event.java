@@ -30,6 +30,12 @@ public class Event {
 
     private String imageUrl;
 
+    private int interestedCount = 0;
+
+    private int goingCount = 0;
+
+    private int commentCount = 0;
+
     private LocalDateTime createdAt;
 
     @ManyToOne

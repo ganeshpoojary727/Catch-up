@@ -50,6 +50,7 @@ public class InterestedServiceImpl implements InterestedService {
         interestedEvent.setEvent(event);
 
         interestedRepository.save(interestedEvent);
+
     }
 
     @Override
