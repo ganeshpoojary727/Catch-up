@@ -1,5 +1,7 @@
 package com.catchup.service.impl;
 import com.catchup.dto.CreateEventRequest;
+import com.catchup.dto.EventResponse;
+import com.catchup.dto.UserResponse;
 import com.catchup.entity.Event;
 import com.catchup.entity.User;
 import com.catchup.exceptions.UserNotFoundException;
@@ -43,20 +45,22 @@ public class EventServiceImpl implements EventService {
         event.setCreatedBy(user);
 
         eventRepository.save(event);
-        event.setInterestedCount(event.getInterestedCount() + 1);
-        eventRepository.save(event);
-
     }
     @Override
-    public List<Event> getAllEvents() {
+    public List<EventResponse> getAllEvents() {
 
-        return eventRepository.findAll();
-
+        return eventRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
     @Override
-    public Event getEventById(Long id) {
-        return eventRepository.findById(id)
+    public EventResponse getEventById(Long id) {
+
+        Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Event not found"));
+
+        return mapToResponse(event);
     }
     @Override
     public void updateEvent(Long id, CreateEventRequest request) {
@@ -82,15 +86,16 @@ public class EventServiceImpl implements EventService {
         eventRepository.delete(event);
     }
     @Override
-    public List<Event> searchEvents(String keyword) {
-        return eventRepository.findByTitleContainingIgnoreCase(keyword);
+    public List<EventResponse> searchEvents(String keyword) {
+
+        return eventRepository
+                .findByTitleContainingIgnoreCase(keyword)
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
     @Override
-    public List<Event> getEventsByCategory(String category) {
-        return eventRepository.findByCategoryIgnoreCase(category);
-    }
-    @Override
-    public List<Event> getMyEvents() {
+    public List<EventResponse> getMyEvents() {
 
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
@@ -100,8 +105,57 @@ public class EventServiceImpl implements EventService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        return eventRepository.findByCreatedBy(user);
+        return eventRepository.findByCreatedBy(user)
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
-    
+    @Override
+    public List<EventResponse> getEventsByCategory(String category) {
 
+        return eventRepository.findByCategory(category)
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+    @Override
+    public List<EventResponse> getTrendingEvents() {
+
+        return eventRepository
+                .findTrendingEvents()
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+    private EventResponse mapToResponse(Event event) {
+
+        EventResponse response = new EventResponse();
+
+        response.setId(event.getId());
+        response.setTitle(event.getTitle());
+        response.setDescription(event.getDescription());
+        response.setLocation(event.getLocation());
+        response.setEventDate(event.getEventDate());
+        response.setCategory(event.getCategory());
+        response.setImageUrl(event.getImageUrl());
+
+        response.setInterestedCount(event.getInterestedCount());
+        response.setGoingCount(event.getGoingCount());
+        response.setCommentCount(event.getCommentCount());
+
+        response.setCreatedAt(event.getCreatedAt());
+
+        if (event.getCreatedBy() != null) {
+
+            UserResponse userResponse = new UserResponse();
+
+            userResponse.setId(event.getCreatedBy().getId());
+            userResponse.setUsername(event.getCreatedBy().getUsername());
+            userResponse.setProfilePicture(event.getCreatedBy().getProfilePicture());
+
+            response.setCreatedBy(userResponse);
+        }
+
+        return response;
+    }
 }

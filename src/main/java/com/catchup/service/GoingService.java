@@ -9,4 +9,6 @@ public interface GoingService {
     void markGoing(Long eventId);
 
     List<Event> getMyGoingEvents();
+
+    void removeGoing(Long eventId);
 }

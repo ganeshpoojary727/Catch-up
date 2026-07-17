@@ -71,6 +71,15 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(() ->
                         new RuntimeException("Comment not found"));
 
+        Event event = comment.getEvent();
+
         commentRepository.delete(comment);
+
+        if (event.getCommentCount() > 0) {
+            event.setCommentCount(event.getCommentCount() - 1);
+        }
+
+        eventRepository.save(event);
     }
+
 }

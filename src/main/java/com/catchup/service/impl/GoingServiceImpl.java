@@ -84,4 +84,33 @@ public class GoingServiceImpl implements GoingService {
 
         return events;
     }
+    @Override
+    public void removeGoing(Long eventId) {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new UserNotFoundException("User not found"));
+
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() ->
+                        new RuntimeException("Event not found"));
+
+        GoingEvent goingEvent =
+                goingRepository.findByUserAndEvent(user, event)
+                        .orElseThrow(() ->
+                                new RuntimeException("Going not found"));
+
+        goingRepository.delete(goingEvent);
+
+        if (event.getGoingCount() > 0) {
+            event.setGoingCount(event.getGoingCount() - 1);
+        }
+
+        eventRepository.save(event);
+    }
 }

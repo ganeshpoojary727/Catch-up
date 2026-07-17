@@ -86,4 +86,33 @@ public class InterestedServiceImpl implements InterestedService {
 
         return events;
     }
+    @Override
+    public void removeInterested(Long eventId) {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new UserNotFoundException("User not found"));
+
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() ->
+                        new RuntimeException("Event not found"));
+
+        InterestedEvent interestedEvent =
+                interestedRepository.findByUserAndEvent(user, event)
+                        .orElseThrow(() ->
+                                new RuntimeException("Interest not found"));
+
+        interestedRepository.delete(interestedEvent);
+
+        if (event.getInterestedCount() > 0) {
+            event.setInterestedCount(event.getInterestedCount() - 1);
+        }
+
+        eventRepository.save(event);
+    }
 }

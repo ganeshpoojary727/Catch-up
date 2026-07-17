@@ -3,6 +3,7 @@ package com.catchup.controller;
 import com.catchup.entity.Event;
 import com.catchup.service.InterestedService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,5 +27,15 @@ public class InterestedController {
     public List<Event> getMyInterestedEvents() {
 
         return interestedService.getMyInterestedEvents();
+
     }
+    @DeleteMapping("/{eventId}/interested")
+    public ResponseEntity<String> removeInterested(
+            @PathVariable Long eventId) {
+
+        interestedService.removeInterested(eventId);
+
+        return ResponseEntity.ok("Interest Removed");
+    }
+
 }

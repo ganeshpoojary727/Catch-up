@@ -1,6 +1,7 @@
 package com.catchup.controller;
 
 import com.catchup.dto.CreateEventRequest;
+import com.catchup.dto.EventResponse;
 import com.catchup.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +23,13 @@ public class EventController {
         return "Event Created Successfully";
     }
     @GetMapping
-    public List<Event> getAllEvents() {
+    public List<EventResponse> getAllEvents() {
 
         return eventService.getAllEvents();
 
     }
     @GetMapping("/{id}")
-    public Event getEventById(@PathVariable Long id) {
+    public EventResponse getEventById(@PathVariable Long id) {
 
         return eventService.getEventById(id);
 
@@ -50,19 +51,24 @@ public class EventController {
         return "Event Deleted Successfully";
     }
     @GetMapping("/search")
-    public List<Event> searchEvents(@RequestParam String keyword) {
+    public List<EventResponse> searchEvents(@RequestParam String keyword) {
         return eventService.searchEvents(keyword);
     }
     @GetMapping("/category/{category}")
-    public List<Event> getEventsByCategory(
+    public List<EventResponse> getEventsByCategory(
             @PathVariable String category) {
 
         return eventService.getEventsByCategory(category);
 
     }
     @GetMapping("/my-events")
-    public List<Event> getMyEvents() {
+    public List<EventResponse> getMyEvents() {
         return eventService.getMyEvents();
     }
+    @GetMapping("/trending")
+    public List<EventResponse> getTrendingEvents() {
 
+        return eventService.getTrendingEvents();
+
+    }
 }

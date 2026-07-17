@@ -1,6 +1,7 @@
 package com.catchup.service;
 
 import com.catchup.dto.CreateEventRequest;
+import com.catchup.dto.EventResponse;
 import com.catchup.entity.Event;
 
 import java.util.List;
@@ -9,19 +10,19 @@ public interface EventService {
 
     void createEvent(CreateEventRequest request);
 
-    List<Event> getAllEvents();
+    public List<EventResponse> getAllEvents();
 
-    Event getEventById(Long id);
+    EventResponse getEventById(Long id);
 
     void updateEvent(Long id, CreateEventRequest request);
 
     void deleteEvent(Long id);
 
-    List<Event> searchEvents(String keyword);
+    List<EventResponse> searchEvents(String keyword);
 
-    List<Event> getEventsByCategory(String category);
+    List<EventResponse> getEventsByCategory(String category);
 
-    List<Event> getMyEvents();
+    List<EventResponse> getMyEvents();
 
-    
+    List<EventResponse> getTrendingEvents();
 }

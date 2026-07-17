@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/events")
+@RequestMapping("/api/comments")
 @RequiredArgsConstructor
 public class CommentController {
 
@@ -26,7 +26,7 @@ public class CommentController {
         return ResponseEntity.ok("Comment Added");
     }
 
-    @GetMapping("/{eventId}")
+    @GetMapping("/{eventId}/comments")
     public List<Comment> getCommentsByEvent(
             @PathVariable Long eventId) {
 
@@ -34,8 +34,10 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public String deleteComment(
-            @PathVariable Long commentId) {
+    public String deleteComment(@PathVariable Long commentId){
+
+        System.out.println("DELETE CONTROLLER HIT");
+
 
         commentService.deleteComment(commentId);
 

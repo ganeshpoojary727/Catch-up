@@ -10,4 +10,5 @@ public interface InterestedService {
 
     List<Event> getMyInterestedEvents();
 
+    void removeInterested(Long eventId);
 }
