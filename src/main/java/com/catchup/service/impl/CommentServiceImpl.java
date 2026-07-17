@@ -49,6 +49,9 @@ public class CommentServiceImpl implements CommentService {
         comment.setEvent(event);
 
         commentRepository.save(comment);
+
+        event.setCommentCount(event.getCommentCount() + 1);
+        eventRepository.save(event);
     }
 
     @Override

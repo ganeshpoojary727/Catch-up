@@ -51,6 +51,16 @@ public class InterestedServiceImpl implements InterestedService {
 
         interestedRepository.save(interestedEvent);
 
+        System.out.println("Before increment = " + event.getInterestedCount());
+
+        event.setInterestedCount(event.getInterestedCount() + 1);
+
+        System.out.println("After increment = " + event.getInterestedCount());
+
+        eventRepository.save(event);
+
+        System.out.println("Saved successfully");
+
     }
 
     @Override

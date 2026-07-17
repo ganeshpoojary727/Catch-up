@@ -50,6 +50,16 @@ public class GoingServiceImpl implements GoingService {
         goingEvent.setEvent(event);
 
         goingRepository.save(goingEvent);
+
+        System.out.println("Before increment = " + event.getGoingCount());
+
+        event.setGoingCount(event.getGoingCount() + 1);
+
+        System.out.println("After increment = " + event.getGoingCount());
+
+        eventRepository.save(event);
+
+        System.out.println("Saved successfully");
     }
 
     @Override

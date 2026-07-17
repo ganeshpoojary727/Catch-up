@@ -41,7 +41,11 @@ public class EventServiceImpl implements EventService {
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         event.setCreatedBy(user);
+
         eventRepository.save(event);
+        event.setInterestedCount(event.getInterestedCount() + 1);
+        eventRepository.save(event);
+
     }
     @Override
     public List<Event> getAllEvents() {

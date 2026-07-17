@@ -4,25 +4,26 @@ import com.catchup.dto.CreateCommentRequest;
 import com.catchup.entity.Comment;
 import com.catchup.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("/api/events")
 @RequiredArgsConstructor
 public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/{eventId}")
-    public String createComment(
+    @PostMapping("/{eventId}/comments")
+    public ResponseEntity<String> createComment(
             @PathVariable Long eventId,
             @RequestBody CreateCommentRequest request) {
 
         commentService.createComment(eventId, request);
 
-        return "Comment Added Successfully";
+        return ResponseEntity.ok("Comment Added");
     }
 
     @GetMapping("/{eventId}")
