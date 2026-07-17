@@ -22,7 +22,7 @@ public class AuthController {
         return "User Registered Successfully";
     }
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
+    public String login(@Valid @RequestBody LoginRequest request) {
         return userService.login(request);
     }
     @GetMapping("/profile")

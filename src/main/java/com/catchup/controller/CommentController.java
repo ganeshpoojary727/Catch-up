@@ -3,6 +3,7 @@ package com.catchup.controller;
 import com.catchup.dto.CreateCommentRequest;
 import com.catchup.entity.Comment;
 import com.catchup.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class CommentController {
     @PostMapping("/{eventId}/comments")
     public ResponseEntity<String> createComment(
             @PathVariable Long eventId,
-            @RequestBody CreateCommentRequest request) {
+            @Valid @RequestBody CreateCommentRequest request) {
 
         commentService.createComment(eventId, request);
 

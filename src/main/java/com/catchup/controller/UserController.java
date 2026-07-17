@@ -2,6 +2,7 @@ package com.catchup.controller;
 
 import com.catchup.dto.UserProfileResponse;
 import com.catchup.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +23,11 @@ public class UserController {
         return userService.getMyProfile();
     }
     @PutMapping("/me")
-    public String updateProfile(@RequestBody UpdateProfileRequest request) {
+    public String updateProfile(@Valid @RequestBody UpdateProfileRequest request) {
 
         userService.updateProfile(request);
 
         return "Profile Updated Successfully";
     }
-    
+
 }

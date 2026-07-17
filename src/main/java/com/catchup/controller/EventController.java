@@ -3,10 +3,11 @@ package com.catchup.controller;
 import com.catchup.dto.CreateEventRequest;
 import com.catchup.dto.EventResponse;
 import com.catchup.service.EventService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import com.catchup.entity.Event;
+
 import java.util.List;
 @RestController
 @RequestMapping("/api/events")
@@ -16,7 +17,7 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping
-    public String createEvent(@RequestBody CreateEventRequest request) {
+    public String createEvent(@Valid @RequestBody CreateEventRequest request) {
 
         eventService.createEvent(request);
 
