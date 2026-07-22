@@ -1,59 +1,57 @@
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 
-function EventCard() {
+function EventCard({
+  image,
+  category,
+  title,
+  organizer,
+  location,
+  date,
+  interested,
+  comments,
+}) {
   return (
-    <Card className="max-w-xl mx-auto">
-
+    <Card>
       <img
-        src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=1200"
-        alt="Event"
-        className="w-full h-60 object-cover"
+        src={image}
+        alt={title}
+        className="w-full h-72 object-cover rounded-t-xl"
       />
 
-      <div className="p-5">
+      <div className="p-6">
 
-        <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm">
-          Technology
+        <span className="inline-block px-3 py-1 text-sm rounded-full bg-indigo-100 text-indigo-600">
+          {category}
         </span>
 
-        <h2 className="text-2xl font-bold mt-4">
-          AI Hackathon 2026
+        <h2 className="text-3xl font-bold mt-4">
+          {title}
         </h2>
 
         <p className="text-gray-600 mt-2">
-          Organized by SDMIT Coding Club
+          Organized by {organizer}
         </p>
 
-        <div className="flex gap-4 mt-4 text-sm text-gray-500">
-          <span>📍 Ujire</span>
-          <span>🗓 Tomorrow</span>
+        <div className="flex justify-between mt-5 text-gray-500">
+          <span>📍 {location}</span>
+          <span>📅 {date}</span>
         </div>
 
-        <div className="flex gap-5 mt-4">
-
-          <span>❤️ 432</span>
-
-          <span>💬 58</span>
-
-          <span>👀 1.2K</span>
-
+        <div className="flex gap-6 mt-5 text-gray-600">
+          <span>👥 {interested} Interested</span>
+          <span>💬 {comments} Comments</span>
         </div>
 
-        <div className="mt-6 flex gap-3">
-
-          <Button>
-            Interested
-          </Button>
+        <div className="flex gap-4 mt-6">
+          <Button>Interested</Button>
 
           <Button variant="secondary">
             View Details
           </Button>
-
         </div>
 
       </div>
-
     </Card>
   );
 }
