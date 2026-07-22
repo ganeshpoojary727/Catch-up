@@ -1,0 +1,24 @@
+import { User } from "lucide-react";
+
+function ProfileMenu() {
+  return (
+    <button
+      className="
+        w-10
+        h-10
+        rounded-full
+        bg-indigo-600
+        text-white
+        flex
+        items-center
+        justify-center
+        hover:bg-indigo-700
+        transition
+      "
+    >
+      <User size={20} />
+    </button>
+  );
+}
+
+export default ProfileMenu;
