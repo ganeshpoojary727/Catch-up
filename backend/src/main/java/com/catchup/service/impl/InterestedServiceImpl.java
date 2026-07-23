@@ -30,6 +30,12 @@ public class InterestedServiceImpl implements InterestedService {
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
 
+        System.out.println("Authentication = " + authentication);
+
+        if (authentication != null) {
+            System.out.println("Name = " + authentication.getName());
+        }
+
         String email = authentication.getName();
 
         User user = userRepository.findByEmail(email)

@@ -17,7 +17,8 @@ public class InterestedController {
 
     @PostMapping("/{eventId}/interested")
     public String markInterested(@PathVariable Long eventId) {
-
+        System.out.println("===== CONTROLLER HIT =====");
+        System.out.println("Event ID = " + eventId);
         interestedService.markInterested(eventId);
 
         return "Marked as Interested";
@@ -37,5 +38,6 @@ public class InterestedController {
 
         return ResponseEntity.ok("Interest Removed");
     }
+
 
 }
