@@ -1,26 +1,31 @@
-import Chip from "../ui/Chip";
+import CategoryPill from "../feed/CategoryPill";
 
 const categories = [
-  "🔥 Trending",
-  "💻 Technology",
-  "🎵 Music",
-  "🏍 Automotive",
-  "⚽ Sports",
-  "🎨 Art",
-  "🎮 Gaming",
+  { label: "Trending", icon: "🔥" },
+  { label: "Technology", icon: "💻" },
+  { label: "Music", icon: "🎵" },
+  { label: "Automotive", icon: "🏍️" },
+  { label: "Sports", icon: "⚽" },
+  { label: "Art", icon: "🎨" },
+  { label: "Gaming", icon: "🎮" },
 ];
 
-function CategoryScroller() {
+function CategoryScroller({
+  selectedCategory,
+  setSelectedCategory,
+}) {
   return (
-    <section className="mb-8">
-      <div className="flex gap-3 overflow-x-auto pb-2">
-        {categories.map((category, index) => (
-          <Chip key={category} active={index === 0}>
-            {category}
-          </Chip>
-        ))}
-      </div>
-    </section>
+    <div className="flex gap-3 overflow-x-auto py-3 scrollbar-hide">
+      {categories.map((category) => (
+        <CategoryPill
+          key={category.label}
+          label={category.label}
+          icon={category.icon}
+          active={selectedCategory === category.label}
+          onClick={() => setSelectedCategory(category.label)}
+        />
+      ))}
+    </div>
   );
 }
 
